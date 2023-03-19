@@ -5,12 +5,14 @@ let contacts = [
     id: uuid(),
     name: 'Felipe',
     email: 'felipe@gmail.com',
+    phone: '99900000000',
     category_id: uuid(),
   },
   {
     id: uuid(),
     name: 'Felipe 1',
     email: 'felipe1@gmail.com',
+    phone: '99900000000',
     category_id: uuid(),
   },
 ];
@@ -28,10 +30,33 @@ class ContactController {
     });
   }
 
+  findByEmail(email) {
+    return new Promise((resolve) => {
+      resolve(contacts.find((contact) => contact.email === email));
+    });
+  }
+
   delete(id) {
     return new Promise((resolve) => {
       contacts = contacts.filter((contact) => contact.id !== id);
       resolve();
+    });
+  }
+
+  create({
+    name, email, phone, category_id,
+  }) {
+    return new Promise((resolve) => {
+      const newContact = {
+        id: uuid(),
+        name,
+        email,
+        phone,
+        category_id,
+      };
+
+      contacts.push(newContact);
+      resolve(newContact);
     });
   }
 }
