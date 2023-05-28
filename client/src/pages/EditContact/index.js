@@ -1,3 +1,5 @@
+import PageHeader from '../../components/PageHeader';
+
 export default function Home() {
-  return 'EditContact';
+  return <PageHeader title="Editar Felipe Andrade" />;
 }
