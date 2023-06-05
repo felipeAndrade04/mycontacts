@@ -21,6 +21,10 @@
     "import/no-named-as-default": "off",
     "import/no-named-as-default-member": "off",
     "import/prefer-default-export": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-confusing-arrow": "off",
+    "implicit-arrow-linebreak": "off",
+    "indent": "off",
+    "operator-linebreak": "off"
   }
 }
