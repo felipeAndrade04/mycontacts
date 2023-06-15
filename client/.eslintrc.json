@@ -25,6 +25,7 @@
     "no-confusing-arrow": "off",
     "implicit-arrow-linebreak": "off",
     "indent": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "react/jsx-no-bind": "off"
   }
 }
