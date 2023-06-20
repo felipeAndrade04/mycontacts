@@ -31,11 +31,16 @@ class ContactController {
 
     const contactExists = await ContactsRepository.findByEmail(email);
     if (contactExists) {
-      return response.status(400).json({ error: 'This email is already in use' });
+      return response
+        .status(400)
+        .json({ error: 'This email is already in use' });
     }
 
     const contact = await ContactsRepository.create({
-      name, email, phone, category_id,
+      name,
+      email,
+      phone,
+      category_id,
     });
 
     response.json(contact);
@@ -58,11 +63,16 @@ class ContactController {
 
     const contactByEmail = await ContactsRepository.findByEmail(email);
     if (contactByEmail && contactByEmail.id !== id) {
-      return response.status(400).json({ error: 'This email is already in use' });
+      return response
+        .status(400)
+        .json({ error: 'This email is already in use' });
     }
 
     const contact = await ContactsRepository.update(id, {
-      name, email, phone, category_id,
+      name,
+      email,
+      phone,
+      category_id,
     });
 
     response.json(contact);
