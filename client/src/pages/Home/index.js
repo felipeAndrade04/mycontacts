@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Container,
   Header,
@@ -16,8 +16,12 @@ export default function Home() {
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredContacts = useMemo(
+    () =>
+      contacts.filter((contact) =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    [contacts, searchTerm]
   );
 
   useEffect(() => {
@@ -48,22 +52,22 @@ export default function Home() {
         />
       </InputSearchContainer>
 
-      {filteredContacts.length > 0 && (
-        <Header>
-          <strong>
-            {filteredContacts.length}{' '}
-            {filteredContacts.length === 1 ? 'contato' : 'contatos'}
-          </strong>
-          <Link to="/new">Novo contato</Link>
-        </Header>
-      )}
+      <Header>
+        <strong>
+          {filteredContacts.length}{' '}
+          {filteredContacts.length === 1 ? 'contato' : 'contatos'}
+        </strong>
+        <Link to="/new">Novo contato</Link>
+      </Header>
 
-      <ListHeader orderBy={orderBy}>
-        <button type="button" onClick={handleToggleOrderBy}>
-          <span>Nome</span>
-          <img src={arrow} alt="arrow" />
-        </button>
-      </ListHeader>
+      {filteredContacts.length > 0 && (
+        <ListHeader orderBy={orderBy}>
+          <button type="button" onClick={handleToggleOrderBy}>
+            <span>Nome</span>
+            <img src={arrow} alt="arrow" />
+          </button>
+        </ListHeader>
+      )}
 
       {filteredContacts.map((contact) => (
         <Card key={contact.id}>
