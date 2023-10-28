@@ -25,10 +25,16 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     ref,
     () => ({
       setFieldsValues: (contact) => {
-        setName(contact.name || '');
-        setEmail(contact.email || '');
-        setPhone(formatPhone(contact.phone || ''));
-        setCategoryId(contact.category_id);
+        setName(contact.name ?? '');
+        setEmail(contact.email ?? '');
+        setPhone(formatPhone(contact.phone ?? ''));
+        setCategoryId(contact.category_id ?? '');
+      },
+      resetFields: () => {
+        setName('');
+        setEmail('');
+        setPhone(formatPhone(''));
+        setCategoryId('');
       },
     }),
     []
