@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Loader from '../../components/Loader';
+import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import {
   Container,
@@ -69,6 +70,16 @@ export default function Home() {
   return (
     <Container>
       <Loader isLoading={isLoading} />
+
+      <Modal
+        danger
+        title='Tem certeza que deseja remover o contato "Mateus Silva"?'
+        confirmLabel="Deletar"
+        onCancel={() => console.log('cancel')}
+        onConfirm={() => console.log('onConfirm')}
+      >
+        <p>Corpo do modal</p>
+      </Modal>
 
       {contacts.length > 0 && (
         <InputSearchContainer>
