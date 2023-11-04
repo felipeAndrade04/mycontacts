@@ -7,6 +7,7 @@ export default function Modal({
   visible,
   danger,
   title,
+  isLoading,
   children,
   cancelLabel,
   confirmLabel,
@@ -25,10 +26,20 @@ export default function Modal({
         <div className="modal-body">{children}</div>
 
         <Footer>
-          <button className="cancel-button" type="button" onClick={onCancel}>
+          <button
+            className="cancel-button"
+            type="button"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
             {cancelLabel}
           </button>
-          <Button danger={danger} type="button" onClick={onConfirm}>
+          <Button
+            danger={danger}
+            type="button"
+            onClick={onConfirm}
+            isLoading={isLoading}
+          >
             {confirmLabel}
           </Button>
         </Footer>
@@ -41,6 +52,7 @@ export default function Modal({
 Modal.propTypes = {
   visible: PropTypes.bool.isRequired,
   danger: PropTypes.bool,
+  isLoading: PropTypes.bool,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   cancelLabel: PropTypes.string,
@@ -51,6 +63,7 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
   danger: false,
+  isLoading: false,
   cancelLabel: 'Cancelar',
   confirmLabel: 'Confirmar',
 };

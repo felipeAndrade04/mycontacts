@@ -20,6 +20,7 @@ import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/icons/empty-box.svg';
 import magnifierQuestion from '../../assets/images/icons/magnifier-question.svg';
 import ContactsService from '../../services/ContactsService';
+import toast from '../../utils/toast';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -28,6 +29,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isDeliteModalVisible, setIsDeliteModalVisible] = useState(false);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
 
   const filteredContacts = useMemo(
@@ -76,6 +78,31 @@ export default function Home() {
 
   function handleCloseDeleteModal() {
     setIsDeliteModalVisible(false);
+    setContactBeingDeleted(null);
+  }
+
+  async function handleConfirmDeleteContact() {
+    try {
+      setIsLoadingDelete(true);
+      await ContactsService.deleteContact(contactBeingDeleted.id);
+
+      handleCloseDeleteModal();
+      setContacts((prevState) =>
+        prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
+      );
+
+      toast({
+        type: 'success',
+        text: 'Contato deletado com sucesso!',
+      });
+    } catch (error) {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao tentar deletar o contato!',
+      });
+    } finally {
+      setIsLoadingDelete(false);
+    }
   }
 
   return (
@@ -87,8 +114,9 @@ export default function Home() {
         danger
         title={`Tem certeza que deseja remover o contato "${contactBeingDeleted?.name}"?`}
         confirmLabel="Deletar"
+        isLoading={isLoadingDelete}
         onCancel={handleCloseDeleteModal}
-        onConfirm={() => console.log('onConfirm')}
+        onConfirm={handleConfirmDeleteContact}
       >
         <p>Esta ação não poderá ser desfeita</p>
       </Modal>
