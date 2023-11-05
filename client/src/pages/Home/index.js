@@ -133,7 +133,7 @@ export default function Home() {
       )}
 
       <Header
-        justifyContent={
+        justifycontent={
           // eslint-disable-next-line no-nested-ternary
           hasError
             ? 'flex-end'
